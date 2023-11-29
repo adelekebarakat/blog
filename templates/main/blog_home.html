@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Blog Home{% endblock title %}
+
+{% block content %}
+<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="3" aria-label="Slide 4"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{% static 'image/first-slider.jpg' %}" class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>Welcome to ExploreWorld Blog</h5>
+          <p>Discover the joy in life's simple moments with ExploreWorld. Uncover practical tips, inspiring stories, and science-backed insights to cultivate happiness. Embrace a positive mindset and elevate your well-being on this journey towards a happier, fulfilled life.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'image/tech1.jpg' %}" class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>Technology World</h5>
+          <p>Explore the latest in tech trends, innovation, and gadgets. From AI breakthroughs to cutting-edge devices, stay informed in ExploreWorld.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'image/health.jpg' %}" class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block ">
+          <h5>Health World</h5>
+          <p>Discover a wealth of insights on holistic health, wellness, and fitness. Our health blog covers nutrition tips, exercise routines, mental well-being, and the latest trends for a vibrant and balanced life.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'image/science3.jpg' %}" class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>Explore World</h5>
+          <p>Uncover the latest breakthroughs, fascinating discoveries, and thought-provoking insights. Stay informed and inspired as we journey through the realms of science together.</p>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+
+
+
+
+
+
+
+<!-- ====================================================================== -->
+<h1 class="red_color">Blog Home</h1>
+<div class="row">
+    {% if object_list %}
+        {% for data in object_list %}
+        <div class="col-sm-6 mt-1">
+            <div class="card">
+                {% if data.post_image %}
+                <img src="{{data.post_image.url}}" class="card-img-top" alt="{{data.name| truncatechars:30}}">
+                {% else %}
+                <img src="{% static 'image/tech1.jpg' %}" class="card-img-top" alt="{{data.name| truncatechars:30}}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ data.name }}</h5>
+                    <span class="badge bg-success">{{data.author}}</span>
+                    <p class="card-text">
+                        {{data.mini_description| truncatechars:200}}
+                    </p>
+                    <a href="{% url 'blog_detail' data.slug %}" class="btn btn-primary"><i class="fa-brands fa-readme"></i> Read More</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <h2 class="text-danger text-center">No blog found</h2>
+    {% endif %}
+</div>
+
+<div class="mt-5">
+    <nav aria-label="Page navigation example">
+        
+        <ul class="pagination justify-content-between">
+           
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{page_obj.previous_page_number}}">Previous</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link">Previous</a>
+                </li>
+            {% endif %}
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{page_obj.next_page_number}}">Next</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link">Next</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+{% endblock content %}
