@@ -16,10 +16,7 @@
             <div>
                 <img src="{{blog.post_image.url}}" alt="{{blog.name}}" class="img-fluid">
             </div>
-            {% else %}
-            <div>
-            <img src="{% static 'image/tech1.jpg' %}" alt="default" class="img-fluid">
-            </div>
+           
             {% endif %}
             <div class="mt-2">
                 {% if user.is_authenticated %}
